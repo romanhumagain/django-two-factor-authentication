@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-sm p-4" style="width: 350px;">
+        {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger">{{message}}</div>
+            {% elif message.tags != "error" %}    
+            <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+        <h3 class="text-center font-weight-bold mb-4">Login Form</h3>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+            <div class="footer">
+                Create a New Account? <a href="{% url 'register_user' %}" class="text-decoration-none">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger">{{message}}</div>
+            {% elif message.tags != "error" %}    
+            <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+                <div class="card-header bg-info text-white text-center">
+                    <h4>OTP Verification</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">Please enter the OTP sent to your registered email/phone.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="otp">Enter OTP</label>
+                            <input type="text" class="form-control" id="otp" name="otp" placeholder="XXXXXX" maxlength="6">
+                        </div>
+                        <div>
+                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                        <a href="/otp-resend/{{slug}}/" type="submit" class="btn btn-outline-danger btn-block">Resend Code</a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
